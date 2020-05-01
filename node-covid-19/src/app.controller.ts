@@ -1,12 +1,16 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
+import { FileParserService } from './file-parser.service';
+import { States, stateObject } from './states_details';
 
-@Controller()
+@Controller('statedata')
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService, private readonly fileService: FileParserService) {
+    this.fileService.parseData();
+  }
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  getStateData(): stateObject[] {
+    return States.states_data;
   }
 }
